@@ -31,8 +31,8 @@ public class UserController {
         model.addAttribute("role", userDetails.getAuthorities().iterator().next().getAuthority());
         return "UserPage";
     }
-    @GetMapping("/login")
+    @GetMapping("/")
     public String logoutPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        return "index";
+        return "LogingPage";
     }
 }

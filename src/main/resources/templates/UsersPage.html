@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      lang="en">
 <head>
     <meta charset="UTF-8">
     <title>UsersPage</title>
@@ -45,8 +46,11 @@
     </tr>
 </table>
 <hr/>
-<form th:method="GET" th:action="@{/users/new}">
+<form th:method="GET" th:action="@{/admin/new}">
     <input type="submit" value="Create new user">
+</form>
+<form th:method="POST" th:action="@{/logout}">
+    <input type="submit" value="Logout"/>
 </form>
 </body>
 </html>

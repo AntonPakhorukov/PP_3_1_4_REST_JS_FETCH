@@ -49,7 +49,7 @@ public class AdminController {
             return "createUser";
         }
         userService.saveUser(user);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/edit/{id}")
@@ -65,13 +65,13 @@ public class AdminController {
             return "updateUser";
         }
         userService.updateUser(user);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @PostMapping("/{id}")
     public String deleteUser(@PathVariable(name = "id") long id) {
         userService.deleteById(id);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 }
 
