@@ -13,6 +13,8 @@ import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -69,6 +71,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "updateUser";
         }
+        System.out.println("Put_update");
         userService.updateUser(user);
         return "redirect:/admin";
     }
