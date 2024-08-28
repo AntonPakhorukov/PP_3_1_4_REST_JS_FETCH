@@ -54,7 +54,12 @@ public class AdminController {
             return "createUser";
         }
         Role role = roleService.findById(roleId);
-        user.getRoles().add(role);
+        if (role.getRole().contains("ROLE_ADMIN")) {
+            user.getRoles().add(role);
+            user.getRoles().add(roleService.findByName("ROLE_USER"));
+        } else {
+            user.getRoles().add(role);
+        }
         userService.saveUser(user);
         return "redirect:/admin";
     }
