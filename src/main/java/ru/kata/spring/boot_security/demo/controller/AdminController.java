@@ -10,19 +10,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
-
-import java.security.Principal;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
     private UserService userService;
+    private RoleService roleService;
 
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping
@@ -45,16 +46,14 @@ public class AdminController {
     }
 
     @PostMapping
-    public String createUser(@ModelAttribute("user") /*@Valid*/ User user, BindingResult bindingResult) {
+    public String createUser(@ModelAttribute("user") /*@Valid*/ User user, BindingResult bindingResult,
+                             @RequestParam Long roleId) {
         if (bindingResult.hasErrors()) {
             return "createUser";
         }
-//        user.getRoles().add(new Role("ROLE_USER"));
+        Role role = roleService.findById(roleId);
+        user.getRoles().add(role);
         userService.saveUser(user);
-//        long roleId = user.getRoles().contains("ROLE_USER") ? 1 : 2;
-//        userService.insertUserRole(user.getId(), roleId);
-        userService.insertUserRole(user.getId(), 1L);
-        System.out.println(user);
         return "redirect:/admin";
     }
 

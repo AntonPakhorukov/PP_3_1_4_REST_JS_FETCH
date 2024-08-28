@@ -9,5 +9,4 @@ public interface UserService {
     User saveUser(User user);
     void updateUser(User user);
     void deleteById(Long id);
-    void insertUserRole(Long userId, Long roleId);
 }
