@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      lang="en">
 <head>
     <meta charset="UTF-8">
     <title>CreateUser</title>
@@ -10,6 +11,22 @@
     <label for="name">Enter name: </label>
     <input th:type="text" th:field="*{name}" id="name"/>
     <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+    <br/>
+    <label for="password">Enter password: </label>
+    <input th:type="text" th:field="*{password}" id="password"/>
+    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
+    <br/>
+    <label for="roles">Enter role: </label>
+    <input th:type="Object" th:field="*{roles}" id="roles"/>
+<!--    <div style="color:red" th:if="${#fields.hasErrors('role')}" th:errors="*{roles}">Password Error</div>-->
+
+
+    <!--    <select id="roles" name="roles">-->
+    <!--        <option value="ROLE_USER">User</option>-->
+    <!--        <option value="ROLE_ADMIN">Admin</option>-->
+    <!--    </select>-->
+
+
     <br/>
     <label for="age">Enter age: </label>
     <input th:type="text" th:field="*{age}" id="age">
@@ -22,5 +39,10 @@
     <hr/>
     <input type="submit" value="Create">
 </form>
+<div style="position: absolute; top: 10px; right: 10px;">
+    <form sec:authorize="hasRole('USER')" th:method="POST" th:action="@{/logout}">
+        <input type="submit" value="Logout"/>
+    </form>
+</div>
 </body>
 </html>

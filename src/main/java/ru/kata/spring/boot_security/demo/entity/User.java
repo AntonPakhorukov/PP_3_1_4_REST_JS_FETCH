@@ -89,7 +89,7 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return "User: id = " + id + ", name = '" + name + "', age = '"
-                + age + "', email = '" + email + "'";
+                + age + "', email = '" + email + "', roles = '" + getRoles() + "'";
     }
 
     @Setter
@@ -107,7 +107,17 @@ public class User implements UserDetails {
         this.password = password;
         this.age = age;
         this.email = email;
+        // added
+        this.roles = new ArrayList<>();
     }
+//    public User(String name, String password, String age, String email, String role) {
+//        this.name = name;
+//        this.password = password;
+//        this.age = age;
+//        this.email = email;
+//        this.roles = new ArrayList<>();
+//        roles.add(new Role(role));
+//    }
 
 
 }

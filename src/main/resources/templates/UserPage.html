@@ -9,6 +9,7 @@
 <p th:text="'Authentification: ' + ${role}">Role</p>
 <p th:text="'ID: ' + ${user.getId()}">UserID</p>
 <p th:text="'Name: ' + ${user.getName()}">UserName</p>
+<p th:text="'Role: ' + ${user.getRoles()}">UserRole</p>
 <p th:text="'Age: ' + ${user.getAge()}">UserAge</p>
 <p th:text="'Email: ' + ${user.getEmail()}">UserEmail</p>
 <p sec:authorize="hasRole('ADMIN')">
@@ -19,9 +20,10 @@
     <input type="submit" value="Delete"/>
 </form>
 <br/>
-<form sec:authorize="hasRole('USER')" th:method="POST" th:action="@{/logout}">
-    <input type="submit" value="Logout"/>
-</form>
-
+<div style="position: absolute; top: 10px; right: 10px;">
+    <form sec:authorize="hasRole('USER')" th:method="POST" th:action="@{/logout}">
+        <input type="submit" value="Logout"/>
+    </form>
+</div>
 </body>
 </html>

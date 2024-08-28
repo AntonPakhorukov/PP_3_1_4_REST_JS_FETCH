@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
@@ -48,7 +49,12 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "createUser";
         }
+//        user.getRoles().add(new Role("ROLE_USER"));
         userService.saveUser(user);
+//        long roleId = user.getRoles().contains("ROLE_USER") ? 1 : 2;
+//        userService.insertUserRole(user.getId(), roleId);
+        userService.insertUserRole(user.getId(), 1L);
+        System.out.println(user);
         return "redirect:/admin";
     }
 

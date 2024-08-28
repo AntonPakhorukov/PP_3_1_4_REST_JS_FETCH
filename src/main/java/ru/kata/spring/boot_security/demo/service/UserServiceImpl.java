@@ -49,4 +49,10 @@ public class UserServiceImpl implements UserService {
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public void insertUserRole(Long userId, Long roleId) {
+        userRepository.insertUserRole(userId, roleId);
+    }
 }
