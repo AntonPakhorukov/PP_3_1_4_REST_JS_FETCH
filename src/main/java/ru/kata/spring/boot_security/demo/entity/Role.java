@@ -15,8 +15,10 @@ public class Role implements GrantedAuthority {
     @Getter
     @Setter
     private long id;
+
     @Getter
     @Setter
+    @Column(unique = true)
     private String role;
 
     public Role() {
