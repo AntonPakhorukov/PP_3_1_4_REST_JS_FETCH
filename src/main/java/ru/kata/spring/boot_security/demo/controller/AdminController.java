@@ -33,7 +33,6 @@ public class AdminController {
     public String GetUserById(@PathVariable("id") long id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         model.addAttribute("role", userDetails.getAuthorities().iterator().next().getAuthority());
         model.addAttribute("user", userService.findById(id));
-//        model.addAttribute("cond", true);
         return "UserPage";
     }
 
