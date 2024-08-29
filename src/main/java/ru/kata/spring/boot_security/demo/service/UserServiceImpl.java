@@ -5,7 +5,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.entity.User;
-import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.List;
@@ -47,6 +46,7 @@ public class UserServiceImpl implements UserService {
         updateUser.setName(user.getUsername());
         updateUser.setAge(user.getAge());
         updateUser.setEmail(user.getEmail());
+        updateUser.setRoles(user.getRoles());
         userRepository.save(updateUser);
     }
 

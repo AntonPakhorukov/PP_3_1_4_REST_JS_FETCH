@@ -5,9 +5,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
@@ -16,8 +14,8 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private UserService userService;
-    private RoleService roleService;
+    private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
     public AdminController(UserService userService, RoleService roleService) {
@@ -35,28 +33,18 @@ public class AdminController {
     public String GetUserById(@PathVariable("id") long id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         model.addAttribute("role", userDetails.getAuthorities().iterator().next().getAuthority());
         model.addAttribute("user", userService.findById(id));
-        model.addAttribute("cond", true);
+//        model.addAttribute("cond", true);
         return "UserPage";
     }
 
     @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user) {
+    public String newUser(@ModelAttribute("user") User user, Model model) {
+        model.addAttribute("roles", roleService.getAllRoles());
         return "createUser";
     }
 
     @PostMapping
-    public String createUser(@ModelAttribute("user") /*@Valid*/ User user, BindingResult bindingResult,
-                             @RequestParam Long roleId) {
-        if (bindingResult.hasErrors()) {
-            return "createUser";
-        }
-        Role role = roleService.findById(roleId);
-        if (role.getRole().contains("ROLE_ADMIN")) {
-            user.getRoles().add(role);
-            user.getRoles().add(roleService.findByName("ROLE_USER"));
-        } else {
-            user.getRoles().add(role);
-        }
+    public String createUser(@ModelAttribute("user") User user) {
         userService.saveUser(user);
         return "redirect:/admin";
     }
@@ -64,16 +52,12 @@ public class AdminController {
     @GetMapping("/edit/{id}")
     public String editUser(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.findById(id));
+        model.addAttribute("roles", roleService.getAllRoles());
         return "updateUser";
     }
 
     @PostMapping("/edit/{id}")
-    public String updateUser(@ModelAttribute("user") /*@Valid*/ User user, BindingResult bindingResult,
-                             @PathVariable("id") long id) {
-        if (bindingResult.hasErrors()) {
-            return "updateUser";
-        }
-        System.out.println("Put_update");
+    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") long id) {
         userService.updateUser(user);
         return "redirect:/admin";
     }

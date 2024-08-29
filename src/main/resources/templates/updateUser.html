@@ -1,23 +1,37 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       lang="en">
 <head>
     <meta charset="UTF-8">
     <title>UpdateUser</title>
+    <style>
+        select {
+            width: 120px;
+            height: 45px;
+            padding: 2px;
+            border-radius: 2px;
+        }
+        select option {
+            padding: 2px;
+        }
+    </style>
 </head>
 <body>
 <form th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:method="POST" th:object="${user}">
     <label for="name">Enter name</label>
     <input type="text" th:field="*{name}" id="name"/>
-    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+    <br/>
     <br/>
     <label for="age">Enter age</label>
     <input type="text" th:field="*{age}" id="age">
-    <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</div>
     <br/>
     <label for="email">Enter email</label>
     <input type="text" th:field="*{email}" id="email">
-    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
+    <br/>
+    <label for="roles">Roles:</label>
+    <select name="roles" id="roles" multiple>
+        <option th:each="role : ${roles}" th:value="${role.getId()}" th:text="${role.getRole()}"></option>
+    </select>
     <br/>
     <hr/>
     <input type="submit" value="Update"/>
