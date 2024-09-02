@@ -26,6 +26,10 @@ public class AdminController {
     @GetMapping
     public String listUsers(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         model.addAttribute("users", userService.findAll());
+        model.addAttribute("auth", userDetails.getAuthorities());
+        User user = userService.findByUsername(userDetails.getUsername());
+        model.addAttribute("user", user);
+        model.addAttribute("roles", roleService.getAllRoles());
         return "UsersPage";
     }
 
@@ -37,8 +41,10 @@ public class AdminController {
     }
 
     @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user, Model model) {
+    public String newUser(@ModelAttribute("user") User user, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         model.addAttribute("roles", roleService.getAllRoles());
+        User currentUser = userService.findByUsername(userDetails.getUsername());
+        model.addAttribute("user", currentUser);
         return "createUser";
     }
 
