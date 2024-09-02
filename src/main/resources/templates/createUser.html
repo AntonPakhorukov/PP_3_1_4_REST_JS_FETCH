@@ -11,7 +11,7 @@
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
     <div class="nav-item text-white px-3">
-        <span class="font-weight-bold" th:text="${user.getName()}"></span>
+        <span class="font-weight-bold" th:text="${user.getEmail()}"></span>
         <span>with roles:</span>
         <span th:each="role: ${user.getRoles()}">
             <a th:text="${role.role.replace('ROLE_', '')}"></a>
@@ -23,10 +23,9 @@
         </li>
     </ul>
 </nav>
-
 <div class="container-fluid bg-light h-100">
-
     <div class="row">
+        <!--    Боковая панель    -->
         <div class="col-md-2 px-0">
             <div class="d-flex flex-column flex-shrink-0 p-0 text-white bg-white mt-3" style="height: 150vh">
                 <ul class="nav nav-pills flex-column">
@@ -44,11 +43,11 @@
                 </ul>
             </div>
         </div>
-        <!--        Admin panel-->
+        <!--        Админская панель         -->
         <div class="col-md-10 mt-3">
             <div class="px-3">
                 <h1>Admin panel</h1>
-                <!--                Navigation-->
+                <!--                Верхняя навигация              -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link" href="/admin" aria-current="false">Users table</a>
@@ -58,12 +57,10 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <!--                    Add new user-->
                     <div class="container-fluid px-0 bg-light">
                         <h5 class="card-header">
                             Add new user</h5>
                     </div>
-<!--                    CREATE USER---------------------------------------------------------------->
                     <div class="px-3 border t bg-white">
                         <form autocomplete="off" class="text-center col-4 mx-auto" th:method="POST"
                               th:action="@{/admin}" th:object="${user}">
@@ -116,7 +113,8 @@
                                 <option th:value="${roles.get(0)}">USER</option>
                             </select>
                             <br>
-                            <input type="submit" class="btn btn-success mt-3 mb-3" value="Add new user" th:action="@{/admin/new}"/>
+                            <input type="submit" class="btn btn-success mt-3 mb-3" value="Add new user"
+                                   th:action="@{/admin/new}"/>
                         </form>
                     </div>
                 </div>
@@ -124,34 +122,6 @@
         </div>
     </div>
 </div>
-
-
-<!--<form th:method="POST" th:action="@{/admin}" th:object="${user}">-->
-<!--    <label for="name">Enter name: </label>-->
-<!--    <input th:type="text" th:field="*{name}" id="name"/>-->
-<!--    <br/>-->
-<!--    <label for="password">Enter password: </label>-->
-<!--    <input th:type="text" th:field="*{password}" id="password"/>-->
-<!--    <br/>-->
-<!--    <label for="age">Enter age: </label>-->
-<!--    <input th:type="text" th:field="*{age}" id="age">-->
-<!--    <br/>-->
-<!--    <label for="email">Enter email: </label>-->
-<!--    <input th:type="text" th:field="*{email}" id="email">-->
-<!--    <br/>-->
-<!--    <label for="roles">Roles:</label>-->
-<!--    <select name="roles" id="roles" multiple>-->
-<!--        <option th:each="role : ${roles}" th:value="${role.getId()}" th:text="${role.getRole()}"></option>-->
-<!--    </select>-->
-<!--    <br/>-->
-<!--    <hr/>-->
-<!--    <input type="submit" value="Create">-->
-<!--</form>-->
-<!--<div style="position: absolute; top: 10px; right: 10px;">-->
-<!--    <form th:method="POST" th:action="@{/logout}">-->
-<!--        <input type="submit" value="Logout"/>-->
-<!--    </form>-->
-<!--</div>-->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>

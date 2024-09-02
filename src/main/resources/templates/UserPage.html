@@ -12,7 +12,7 @@
 <!--Верхний контейнер с логином и лог аут-->
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
     <div class="nav-item text-white px-3">
-        <span class="font-weight-bold" th:text="${user.getUsername()}"></span>
+        <span class="font-weight-bold" th:text="${user.getEmail()}"></span>
         <span>with roles:</span>
         <span th:each="role: ${user.getRoles()}">
             <a th:text="${role.role.replace('ROLE_', '')}"></a>

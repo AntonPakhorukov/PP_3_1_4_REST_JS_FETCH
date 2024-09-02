@@ -11,7 +11,7 @@
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
     <div class="nav-item text-white px-3">
-        <span class="font-weight-bold" th:text="${user.getUsername()}"></span>
+        <span class="font-weight-bold" th:text="${user.getEmail()}"></span>
         <span>with roles:</span>
         <span th:each="role: ${user.getRoles()}">
             <a th:text="${role.role.replace('ROLE_', '')}"></a>
@@ -258,34 +258,6 @@
         </div>
     </div>
 </div>
-
-
-<!--<table id="table">-->
-<!--    <tr>-->
-<!--        <th>Id</th>-->
-<!--        <th>Name</th>-->
-<!--        <th>Age</th>-->
-<!--        <th>Email</th>-->
-<!--    </tr>-->
-<!--    <tr th:each="user : ${users}">-->
-<!--        <td th:text="${user.getId()}"></td>-->
-<!--        <td>-->
-<!--            <a th:href="@{/admin/{id}(id=${user.getId()})}" th:text="${user.getName()}"/>-->
-<!--        </td>-->
-<!--        <td th:text="${user.getAge()}"></td>-->
-<!--        <td th:text="${user.getEmail()}"></td>-->
-<!--    </tr>-->
-<!--</table>-->
-<!--<hr/>-->
-<!--<form th:method="GET" th:action="@{/admin/new}">-->
-<!--    <input type="submit" value="Create new user">-->
-<!--</form>-->
-<!--<br/>-->
-<!--<div style="position: absolute; top: 10px; right: 10px;">-->
-<!--    <form th:method="POST" th:action="@{/logout}">-->
-<!--        <input type="submit" value="Logout"/>-->
-<!--    </form>-->
-<!--</div>-->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
