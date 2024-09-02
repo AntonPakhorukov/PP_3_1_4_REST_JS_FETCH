@@ -6,9 +6,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -25,6 +28,7 @@ public class AdminController {
 
     @GetMapping
     public String listUsers(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        System.out.println("Controller:listUsers");
         model.addAttribute("users", userService.findAll());
         model.addAttribute("auth", userDetails.getAuthorities());
         User user = userService.findByUsername(userDetails.getUsername());
@@ -35,6 +39,7 @@ public class AdminController {
 
     @GetMapping("/{id}")
     public String GetUserById(@PathVariable("id") long id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        System.out.println("Controller:getUserById");
         model.addAttribute("role", userDetails.getAuthorities().iterator().next().getAuthority());
         model.addAttribute("user", userService.findById(id));
         return "UserPage";
@@ -42,33 +47,40 @@ public class AdminController {
 
     @GetMapping("/new")
     public String newUser(@ModelAttribute("user") User user, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        System.out.println("Controller:newUser");
         model.addAttribute("roles", roleService.getAllRoles());
         User currentUser = userService.findByUsername(userDetails.getUsername());
         model.addAttribute("user", currentUser);
         return "createUser";
     }
 
-    @PostMapping
-    public String createUser(@ModelAttribute("user") User user) {
-        userService.saveUser(user);
+    @PostMapping()
+    public String createUser(@ModelAttribute("user") User user, @RequestParam("role") List<String> role) {
+        System.out.println("Controller:createUser");
+        userService.saveUser(user, role);
         return "redirect:/admin";
     }
 
     @GetMapping("/edit/{id}")
     public String editUser(@PathVariable("id") long id, Model model) {
+        System.out.println("Controller:editUser");
         model.addAttribute("user", userService.findById(id));
         model.addAttribute("roles", roleService.getAllRoles());
         return "updateUser";
     }
 
     @PostMapping("/edit/{id}")
-    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") long id) {
+    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") long id,
+                             @RequestParam("role") List<Role> roles) {
+        System.out.println("Controller:updateUser");
+        user.setRoles(roles);
         userService.updateUser(user);
         return "redirect:/admin";
     }
 
     @PostMapping("/{id}")
     public String deleteUser(@PathVariable(name = "id") long id) {
+        System.out.println("Controller:deleteUser");
         userService.deleteById(id);
         return "redirect:/admin";
     }
