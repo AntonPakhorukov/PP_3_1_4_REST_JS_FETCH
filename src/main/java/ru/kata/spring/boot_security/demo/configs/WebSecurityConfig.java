@@ -32,10 +32,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-//                .csrf().disable()
-//                .authorizeRequests().anyRequest().permitAll()
-//                .and()
-//                .formLogin().disable().httpBasic().disable();
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
@@ -70,10 +66,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
-
-    @Bean
-    JdbcUserDetailsManager userDetailsManager(DataSource dataSource) {
-        return new JdbcUserDetailsManager(dataSource);
-    }
-
 }

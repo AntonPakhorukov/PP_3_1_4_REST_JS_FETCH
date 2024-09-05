@@ -35,12 +35,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User saveUser(User user, List<String> roles) {
+    public User saveUser(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        for (String role : roles) {
-            user.getRoles().add(roleService.getRoleByName(role));
-        }
         return userRepository.save(user);
     }
 
@@ -53,5 +50,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         return userRepository.findByName(username);
+    }
+
+    @Override
+    @Transactional
+    public User updateUser(User user, Long id) {
+        User currentUser = userRepository.findById(id).get();
+        currentUser.setName(user.getName());
+        currentUser.setEmail(user.getEmail());
+        currentUser.setAge(user.getAge());
+        currentUser.setRoles(user.getRoles());
+        return userRepository.save(currentUser);
     }
 }
