@@ -6,12 +6,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -28,10 +32,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+//                .csrf().disable()
+//                .authorizeRequests().anyRequest().permitAll()
+//                .and()
+//                .formLogin().disable().httpBasic().disable();
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().successHandler(successUserHandler)
@@ -40,6 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().invalidateHttpSession(true).clearAuthentication(true)
                 .deleteCookies("JSESSIONID").logoutUrl("/logout").logoutSuccessUrl("/login")
                 .permitAll();
+
     }
 
     @Bean
@@ -59,4 +70,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
+
+    @Bean
+    JdbcUserDetailsManager userDetailsManager(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
+    }
+
 }
