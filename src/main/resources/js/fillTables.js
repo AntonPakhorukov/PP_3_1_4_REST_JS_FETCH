@@ -24,7 +24,7 @@ async function fillTableOfAllUsers() {
                 <td>${user.password}</td>
                 <td>${user.age}</td>
                 <td>${user.email}</td>
-                <td>${user.roles.map(role => role.role).join(' ')}</td>
+                <td>${user.roles.map(role => role.role.substring(5)).join(' ')}</td>
                 <td>
                     <button class="btn btn-info btn-sm text-white"
                             data-bs-toggle="modal"

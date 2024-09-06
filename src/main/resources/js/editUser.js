@@ -1,11 +1,20 @@
 async function sendDataEditUser(user) {
     await fetch("/api/admin" ,
-        {method:"PUT", headers: {'Content-type': 'application/json'}, body: JSON.stringify(user)} )
+        {method:"POST", headers: {'Content-type': 'application/json'}, body: JSON.stringify(user)})
 }
 
 const modalEdit = document.getElementById("editModal");
 
 async function EditModalHandler() {
+
+
+    const newEditModal = document.getElementById("editModal");
+    newEditModal.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        const Name = newEditModal.querySelector('#name');
+        console.log(Name);
+    })
+
     await fillModal(modalEdit);
 }
 
@@ -39,14 +48,26 @@ modalEdit.addEventListener("submit", async function(event){
     let user = {
         id: document.getElementById("idEdit").value,
         name: document.getElementById("nameEdit").value,
-        email: document.getElementById("emailEdit").value,
-        age: document.getElementById("ageEdit").value,
-        // username: document.getElementById("usernameEdit").value,
         password: document.getElementById("passwordEdit").value,
+        age: document.getElementById("ageEdit").value,
+        email: document.getElementById("emailEdit").value,
         roles: roles
     }
+    // console.log(document.getElementById("idEdit").value);
+    // console.log(document.getElementById("nameEdit").value);
+    // console.log(document.getElementById("emailEdit").value);
+    // console.log(document.getElementById("ageEdit").value);
+    // console.log(document.getElementById("passwordEdit").value);
+    // console.log(roles);
+    //
+    // console.log('Update: ' + user.id + user.name + user.age + user.email + user.roles);
 
-    await sendDataEditUser(user).catch();
+    try {
+        await sendDataEditUser(user);
+    } catch (error){
+        console.error(error.message);
+    }
+    // await sendDataEditUser(user).catch();
     await fillTableOfAllUsers();
 
     const modalBootstrap = bootstrap.Modal.getInstance(modalEdit);

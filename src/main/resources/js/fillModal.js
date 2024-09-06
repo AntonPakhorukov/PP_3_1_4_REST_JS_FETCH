@@ -13,11 +13,11 @@ async function fillModal(modal) {
         const modalBody = modal.querySelector(".modal-body");
 
         const idInput = modalBody.querySelector("input[data-user-id='id']");
-        const nameInput = modalBody.querySelector("input[data-user-id='Name']");
-        const ageInput = modalBody.querySelector("input[data-user-id='Age']");
-        const emailInput = modalBody.querySelector("input[data-user-id='email']");
-        // const usernameInput = modalBody.querySelector("input[data-user-id='username']");
+        const nameInput = modalBody.querySelector("input[data-user-id='name']");
         const passwordInput = modalBody.querySelector("input[data-user-id='password']");
+        const ageInput = modalBody.querySelector("input[data-user-id='age']");
+        const emailInput = modalBody.querySelector("input[data-user-id='email']");
+        // const roleInput = modalBody.querySelector("input[data-user-id='rolesDelete']");
         if (passwordInput !== null) {
             passwordInput.value = user.password;
         }
@@ -39,7 +39,7 @@ async function fillModal(modal) {
             rolesSelect = rolesSelectDelete;
             for (let i = 0; i < user.roles.length; i++) {
                 userRolesHTML +=
-                    `<option value="${user.roles[i].role}">${user.roles[i].role}</option>`;
+                    `<option value="${user.roles[i].role}">${user.roles[i].role.substring(5)}</option>`;
             }
         } else if (rolesSelectEdit !== null) {
             rolesSelect = rolesSelectEdit;

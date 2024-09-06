@@ -8,11 +8,11 @@ async function dataAboutCurrentUser() {
     return await response.json();
 }
 async function fillTableAboutUser(){
-    const currentUserTable1 = document.getElementById("currentUserTable");
+    const currentTable = document.getElementById("currentUserTable");
     const currentUser = await dataAboutCurrentUser();
 
-    let currentUserTableHTML = "";
-    currentUserTableHTML +=
+    let currentTableInHtml = "";
+    currentTableInHtml +=
         `<tr>
             <td>${currentUser.id}</td>
             <td>${currentUser.name}</td>
@@ -21,7 +21,7 @@ async function fillTableAboutUser(){
             <td>${currentUser.email}</td>
             <td>${currentUser.roles.map(role => role.role.substring(5)).join(' ')}</td>
         </tr>`
-    currentUserTable1.innerHTML = currentUserTableHTML;
+    currentTable.innerHTML = currentTableInHtml;
 }
 
 async function showUsernameOnNavbar() {
