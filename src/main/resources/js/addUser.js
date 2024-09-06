@@ -7,8 +7,6 @@ async function addNewUserForm() {
     const newUserForm = document.getElementById("newUser");
     newUserForm.addEventListener('submit', async function (event) {
         event.preventDefault();
-        const Name = newUserForm.querySelector('#name');
-        console.log(Name);
 
         const name = newUserForm.querySelector("#name").value.trim();
         const password = newUserForm.querySelector("#password").value.trim();
@@ -30,7 +28,6 @@ async function addNewUserForm() {
             roles.push(ROLE_USER);
         }
 
-
         const newUserData = {
             name: name,
             password: password,
@@ -38,13 +35,6 @@ async function addNewUserForm() {
             email: email,
             roles: roles
         };
-
-        console.log("New" + newUserData);
-        console.log(newUserData.name);
-        console.log(newUserData.password);
-        console.log(newUserData.age);
-        console.log(newUserData.email);
-        console.log(newUserData.roles);
 
         await createNewUser(newUserData);
         newUserForm.reset();
