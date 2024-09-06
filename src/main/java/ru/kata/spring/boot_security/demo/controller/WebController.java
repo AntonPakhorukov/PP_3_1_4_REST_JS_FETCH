@@ -36,7 +36,6 @@ public class WebController {
         User user = userService.findByUsername(userDetails.getUsername());
         model.addAttribute("user", user);
         model.addAttribute("roles", roleService.getAllRoles());
-        return "AdminPage";
-//        return "UsersPage";
+        return "UsersPage";
     }
 }
