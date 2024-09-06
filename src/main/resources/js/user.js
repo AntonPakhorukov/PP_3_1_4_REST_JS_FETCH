@@ -16,10 +16,10 @@ async function fillTableAboutUser(){
         `<tr>
             <td>${currentUser.id}</td>
             <td>${currentUser.name}</td>
-            <td>${currentUser.lastname}</td>
+            <td>${currentUser.password}</td>
             <td>${currentUser.age}</td>
-            <td>${currentUser.username}</td>
-            <td>${currentUser.roles.map(role => role.roleNameWithoutRole).join(' ')}</td>
+            <td>${currentUser.email}</td>
+            <td>${currentUser.roles.map(role => role.role.substring(5)).join(' ')}</td>
         </tr>`
     currentUserTable1.innerHTML = currentUserTableHTML;
 }
@@ -28,7 +28,7 @@ async function showUsernameOnNavbar() {
     const currentUsernameNavbar = document.getElementById("currentUsernameNavbar")
     const currentUser = await dataAboutCurrentUser();
     currentUsernameNavbar.innerHTML =
-        `<strong>${currentUser.username}</strong>
+        `<strong>${currentUser.email}</strong>
                  with roles: 
-                 ${currentUser.roles.map(role => role.roleNameWithoutRole).join(' ')}`;
+                 ${currentUser.roles.map(role => role.role.substring(5)).join(' ')}`;
 }
