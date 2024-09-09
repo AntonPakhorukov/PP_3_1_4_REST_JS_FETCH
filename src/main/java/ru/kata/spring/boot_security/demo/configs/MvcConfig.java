@@ -1,17 +1,15 @@
 package ru.kata.spring.boot_security.demo.configs;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
 @Configuration
+@EnableWebMvc
 public class MvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/user").setViewName("user");
-        registry.addViewController("/admin").setViewName("admin");
+        registry.addViewController("/user").setViewName("UserPage");
+        registry.addViewController("/admin").setViewName("UsersPage");
     }
 
     @Override
@@ -27,4 +25,5 @@ public class MvcConfig implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowCredentials(true);
     }
+
 }
